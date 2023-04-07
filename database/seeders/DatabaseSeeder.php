@@ -5,6 +5,8 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Fournisseur;
+use App\Models\Piece;
+use App\Models\PointVente;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -56,5 +58,7 @@ class DatabaseSeeder extends Seeder
         }
 
         Fournisseur::factory(5)->create();
+        PointVente::factory(10)->create();
+        Piece::factory(100)->create();
     }
 }

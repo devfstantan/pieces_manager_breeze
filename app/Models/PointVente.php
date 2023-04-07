@@ -4,18 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Fournisseur extends Model
+class PointVente extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         "nom",
+        "nom_gerant",
         "adresse",
     ];
-    public function pieces():HasMany
-    {
-        return $this->hasMany(Piece::class);
+
+    public function pieces(){
+        return $this->belongsToMany(Piece::class);
     }
 }
