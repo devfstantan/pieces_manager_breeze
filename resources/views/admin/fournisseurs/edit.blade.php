@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
 
                     <div class="relative overflow-x-auto">
-                        <form action="{{ route('admin.fournisseurs.update',$fournisseur) }}" method="POST">
+                        <form action="{{ route('admin.fournisseurs.update',$fournisseur) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             {{-- Nom --}}
@@ -38,7 +38,13 @@
                     
                                 <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
                             </div>
-                            
+                            {{-- Logo --}}
+                            <x-text-input id="logo" class="block mt-1 w-full"
+                                                type="file"
+                                                name="logo"
+                                                value="{{$fournisseur->logo}}"
+                                                accept="image/*"
+                                                  />
                             
                             <x-primary-button class="mt-3">
                                 {{ __('Mettre à jour') }}

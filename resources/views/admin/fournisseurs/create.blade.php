@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
 
                     <div class="relative overflow-x-auto">
-                        <form action="{{ route('admin.fournisseurs.store') }}" method="POST">
+                        <form action="{{ route('admin.fournisseurs.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             {{-- Nom --}}
                             <div class="mt-4">
@@ -37,7 +37,43 @@
                     
                                 <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
                             </div>
-                            
+                            {{-- Logo --}}
+                            <div class="mt-4">
+                                <x-input-label for="logo" :value="__('Logo')" />
+                    
+                                <x-text-input id="logo" class="block mt-1 w-full"
+                                                type="file"
+                                                name="logo"
+                                                value="{{old('logo')}}"
+                                                accept="image/*"
+                                                required  />
+                    
+                                <x-input-error :messages="$errors->get('logo')" class="mt-2" />
+                            </div>
+                            {{-- User name --}}
+                            <div class="mt-4">
+                                <x-input-label for="user_name" :value="__('Nom Utilisateur')" />
+                    
+                                <x-text-input id="user_name" class="block mt-1 w-full"
+                                                type="text"
+                                                name="user_name"
+                                                value="{{old('user_name')}}"
+                                                required  />
+                    
+                                <x-input-error :messages="$errors->get('user_name')" class="mt-2" />
+                            </div>
+                            {{-- User Email --}}
+                            <div class="mt-4">
+                                <x-input-label for="user_email" :value="__('Email Utilisateur')" />
+                    
+                                <x-text-input id="user_email" class="block mt-1 w-full"
+                                                type="text"
+                                                name="user_email"
+                                                value="{{old('user_email')}}"
+                                                required  />
+                    
+                                <x-input-error :messages="$errors->get('user_email')" class="mt-2" />
+                            </div>
                             
                             <x-primary-button class="mt-3">
                                 {{ __('Ajouter') }}

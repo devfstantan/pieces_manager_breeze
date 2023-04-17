@@ -17,6 +17,7 @@
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
+                                    <th></th>
                                     <th scope="col" class="px-6 py-3">{{ __('ID')}}</th>
                                     <th scope="col" class="px-6 py-3"> {{ __('Nom')}}</th>
                                     <th scope="col" class="px-6 py-3">{{ __('Nombre Pièces')}}</th>
@@ -28,8 +29,13 @@
                             <tbody>
                                 @forelse ($fournisseurs as $fournisseur)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td>
+                                            <img class="rounded-full w-10 h-10" src="{{asset($fournisseur->logo)}}" alt="image description">
+                                        </td>
                                         <td class="px-6 py-4">{{ $fournisseur->id }}</td>
-                                        <td class="px-6 py-4">{{ $fournisseur->nom }}</td>
+                                        <td class="px-6 py-4">
+                                            {{ $fournisseur->nom }}
+                                        </td>
                                         <td class="px-6 py-4">{{ $fournisseur->pieces_count }}</td>
                                         <td class="px-6 py-4">
                                             <x-secondary-button-link :href="route('admin.fournisseurs.edit',$fournisseur)" > {{ __('Editer') }} </x-secondary-button-link>
