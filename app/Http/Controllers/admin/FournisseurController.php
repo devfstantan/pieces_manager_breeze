@@ -38,12 +38,19 @@ class FournisseurController extends Controller
         $validated = $request->validate([
             "nom" => 'required|max:255|unique:fournisseurs',
             "adresse" => 'required|max:255',
+            "logo" => 'nullable|image|max:2048'
         ]);
 
-        // 2- Créer une nouveau fournisseur
+        // 2- uploader le logo 
+        if($request->hasFile('logo')){
+            $path = $request->file('logo')->store('images','public');
+            $validated['logo'] = $path;
+        }
+
+        // 3- Créer une nouveau fournisseur
         Fournisseur::create($validated);
 
-        // 3- redériger vers la liste des fournisseurs
+        // 4- redériger vers la liste des fournisseurs
         return redirect('/admin/fournisseurs');
     }
 
@@ -78,12 +85,19 @@ class FournisseurController extends Controller
                 Rule::unique('fournisseurs')->ignore($fournisseur->id)
             ],
             "adresse" => 'required|max:255',
+            "logo" => 'nullable|image|max:2048'
         ]);
 
-        // 2- mettre à jour le fournisseur
+        // 2- uploader le logo 
+        if($request->hasFile('logo')){
+            $path = $request->file('logo')->store('images','public');
+            $validated['logo'] = $path;
+        }
+
+        // 3- mettre à jour le fournisseur
         $fournisseur->update($validated);
 
-        // 3- redériger vers la liste des fournisseurs
+        // 4- redériger vers la liste des fournisseurs
         return redirect('/admin/fournisseurs');
     }
 

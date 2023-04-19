@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom')->unique();
             $table->string('adresse')->default('');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

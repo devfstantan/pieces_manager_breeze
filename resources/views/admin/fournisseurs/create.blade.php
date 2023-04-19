@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
 
                     <div class="relative overflow-x-auto">
-                        <form action="{{ route('admin.fournisseurs.store') }}" method="POST">
+                        <form action="{{ route('admin.fournisseurs.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             {{-- Nom --}}
                             <div class="mt-4">
@@ -36,6 +36,19 @@
                                                 required  />
                     
                                 <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
+                            </div>
+                            {{-- Logo --}}
+                            <div class="mt-4">
+                                <x-input-label for="logo" :value="__('Logo')" />
+                    
+                                <x-text-input id="logo" class="block mt-1 w-full"
+                                                type="file"
+                                                name="logo"
+                                                accept="image/*"
+                                                value="{{old('logo')}}"
+                                                  />
+                    
+                                <x-input-error :messages="$errors->get('logo')" class="mt-2" />
                             </div>
                             
                             

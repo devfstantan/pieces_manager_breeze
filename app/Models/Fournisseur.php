@@ -13,6 +13,7 @@ class Fournisseur extends Model
     protected $fillable = [
         "nom",
         "adresse",
+        'logo'
     ];
     public function pieces():HasMany
     {
