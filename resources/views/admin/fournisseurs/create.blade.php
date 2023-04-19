@@ -50,7 +50,34 @@
                     
                                 <x-input-error :messages="$errors->get('logo')" class="mt-2" />
                             </div>
-                            
+                            {{-- User Name --}}
+                            <div class="mt-4">
+                                <x-input-label for="user_name" :value="__('Nom utilisateur')" />
+                    
+                                <x-text-input id="user_name" class="block mt-1 w-full"
+                                                type="text"
+                                                name="user_name"
+                                                accept="image/*"
+                                                value="{{old('user_name')}}"
+                                                required
+                                                  />
+                    
+                                <x-input-error :messages="$errors->get('user_name')" class="mt-2" />
+                            </div>
+                            {{-- User Email --}}
+                            <div class="mt-4">
+                                <x-input-label for="user_email" :value="__('Email Utilisateur')" />
+                    
+                                <x-text-input id="user_email" class="block mt-1 w-full"
+                                                type="email"
+                                                name="user_email"
+                                                accept="image/*"
+                                                value="{{old('user_email')}}"
+                                                required
+                                                  />
+                    
+                                <x-input-error :messages="$errors->get('user_email')" class="mt-2" />
+                            </div>
                             
                             <x-primary-button class="mt-3">
                                 {{ __('Ajouter') }}

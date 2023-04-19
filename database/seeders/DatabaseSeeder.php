@@ -27,14 +27,20 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin'
             ],
             [
-                'name' => 'Fourniseur 1',
+                'name' => 'Fourniseur User 1',
                 'email' => 'f1@example.com',
-                'role' => 'fournisseur'
+                'role' => 'fournisseur',
+                'fournisseur' => [
+                    'nom' => 'Fournisseur1'
+                ]
             ],
             [
-                'name' => 'Fourniseur 2',
+                'name' => 'Fourniseur User 2',
                 'email' => 'f2@example.com',
-                'role' => 'fournisseur'
+                'role' => 'fournisseur',
+                'fournisseur' => [
+                    'nom' => 'Fournisseur2'
+                ]
             ],
             [
                 'name' => 'Vendeur 1',
@@ -49,15 +55,20 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($users as $user) {
             if( User::where('email',$user['email'])->doesntExist()){
-                User::factory()->create([
+                $u = User::factory()->create([
                     'name' => $user['name'],
                     'email' => $user['email'],
                     'role' => $user['role']
                 ]);
+                if($u->role == 'fournisseur'){
+                    Fournisseur::factory()->create([
+                        'nom' => $user['fournisseur']['nom'],
+                        'user_id' => $u->id
+                    ]);
+                }
             }
         }
 
-        Fournisseur::factory(5)->create();
         PointVente::factory(10)->create();
         Piece::factory(100)->create();
     }

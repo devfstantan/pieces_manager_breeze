@@ -57,4 +57,8 @@ class User extends Authenticatable
             return route('vendeur.dashboard');
         }
     }
+
+    public function fournisseur(){
+        return $this->hasOne(Fournisseur::class);
+    }
 }

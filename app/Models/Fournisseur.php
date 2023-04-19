@@ -13,10 +13,15 @@ class Fournisseur extends Model
     protected $fillable = [
         "nom",
         "adresse",
-        'logo'
+        'logo',
+        "user_id"
     ];
     public function pieces():HasMany
     {
         return $this->hasMany(Piece::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
     }
 }

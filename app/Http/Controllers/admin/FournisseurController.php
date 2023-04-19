@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewFournisseurEmail;
 use App\Models\Fournisseur;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
 class FournisseurController extends Controller
@@ -38,19 +43,40 @@ class FournisseurController extends Controller
         $validated = $request->validate([
             "nom" => 'required|max:255|unique:fournisseurs',
             "adresse" => 'required|max:255',
-            "logo" => 'nullable|image|max:2048'
+            "logo" => 'nullable|image|max:2048',
+            "user_name" => 'required|max:255',
+            "user_email" => 'required|email|unique:users,email'
         ]);
 
-        // 2- uploader le logo 
+        // 2- créer User:
+        $password = Str::random(10);
+        $user = User::create([
+            'name' => $validated['user_name'],
+            'email' => $validated['user_email'],
+            'password' => Hash::make($password)
+        ]);
+        $user->role = 'fournisseur';
+        $user->save();
+        $validated['user_id'] = $user->id;
+
+        // 3- uploader le logo 
         if($request->hasFile('logo')){
             $path = $request->file('logo')->store('images','public');
             $validated['logo'] = $path;
         }
 
-        // 3- Créer une nouveau fournisseur
-        Fournisseur::create($validated);
+        // 4- Créer une nouveau fournisseur
+        $fournisseur = Fournisseur::create($validated);
 
-        // 4- redériger vers la liste des fournisseurs
+        // 5- envoyer email
+        Mail::to($user->email)->send(
+            new NewFournisseurEmail(
+                $user,
+                $fournisseur,
+                $password
+            ));
+
+        // 6- redériger vers la liste des fournisseurs
         return redirect('/admin/fournisseurs');
     }
 

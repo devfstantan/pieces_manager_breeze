@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nom')->unique();
             $table->string('adresse')->default('');
             $table->string('logo')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
