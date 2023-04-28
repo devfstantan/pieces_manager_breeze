@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\NotifyNewFournisseur;
 use App\Mail\SendEmailFournisseur;
 use App\Models\Fournisseur;
 use App\Models\User;
@@ -70,8 +71,9 @@ class FournisseurController extends Controller
         // 4- Créer une nouveau fournisseur
         Fournisseur::create($validated);
 
-        // 5- Envoyer Email à $user
-        Mail::to($user->email)->send(new SendEmailFournisseur($user,$password));
+        // 5- Envoyer Email à $user aprés 5min
+        NotifyNewFournisseur::dispatch($user, $password)
+        ->delay(now()->addMinutes(2));
         // 6- redériger vers la liste des fournisseurs
         return redirect('/admin/fournisseurs');
     }
