@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Jobs\PeriodicJob;
+use App\Jobs\SendWeeklyReport;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,6 +18,10 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+
+        // $schedule->job(new PeriodicJob())->everyMinute();
+        $schedule->job(new SendWeeklyReport())->mondays()->at("2:00");
+        // $schedule->job(new SendWeeklyReport());
     }
 
     /**
